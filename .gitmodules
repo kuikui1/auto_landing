@@ -1,0 +1,3 @@
+[submodule "velocity_marker_tracker"]
+	path = velocity_marker_tracker
+	url = https://github.com/CLDrone/velocity_marker_tracker.git
