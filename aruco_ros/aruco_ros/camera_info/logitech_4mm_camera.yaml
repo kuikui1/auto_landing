@@ -1,0 +1,20 @@
+image_width: 640
+image_height: 480
+camera_name: logitech_4mm_camera
+camera_matrix:
+  rows: 3
+  cols: 3
+  data: [776.440632, 0.000000, 357.114458, 0.000000, 780.833598, 258.367639, 0.000000, 0.000000, 1.000000]
+distortion_model: plumb_bob
+distortion_coefficients:
+  rows: 1
+  cols: 5
+  data: [0.045089, 0.015524, 0.000452, 0.004484, 0.000000]
+rectification_matrix:
+  rows: 3
+  cols: 3
+  data: [1.000000, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000, 0.000000, 0.000000, 1.000000]
+projection_matrix:
+  rows: 3
+  cols: 4
+  data: [784.716003, 0.000000, 357.960456, 0.000000, 0.000000, 790.057190, 257.802062, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000]
