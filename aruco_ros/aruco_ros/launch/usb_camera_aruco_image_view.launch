@@ -8,7 +8,7 @@
     <arg name="exposure"        default="100"/>
 	
 
-	<node name="usb_cam" pkg="usb_cam" type="usb_cam_node" respawn="true" output="screen" >
+	<node name="usb_cam" pkg="usb_cam" type="usb_cam_node" output="screen" >
 		<param name="camera_frame_id" value="usb_6mm_camera" />
 		<param name="camera_name " value="usb_6mm_camera" />
 		<param name="video_device" value="/dev/video0" />
@@ -27,7 +27,7 @@
 		<param name="autosize" value="true" />
 	</node>
 
-    <node pkg="aruco_ros" type="single" name="aruco_single" respawn="true" output="screen">
+    <node pkg="aruco_ros" type="single" name="aruco_single" output="screen">
         <remap from="/camera_info" to="/usb_cam/camera_info" />
         <remap from="/image" to="/usb_cam/image_raw" />
         <param name="image_is_rectified" value="True"/>
