@@ -1,4 +1,4 @@
 
 <launch>
-	<node name="ugvc_record" pkg="rosbag" type="record" output="screen"  respawn="true" args="-e /usb_cam/image_raw /usb/camera_info /aruco_single/result /aruco_single/pose /aruco_single/position /mavros/'(.*)' -b 1024 --split --duration=30"/>>   
+	<node name="ugvc_record" pkg="rosbag" type="record" output="screen"  respawn="true" args="-o /home/odroid/Workspace/ugvc -e /usb_cam/image_raw /usb/camera_info /aruco_single/result /aruco_single/pose /aruco_single/position /mavros/'(.*)' -b 512 --split --duration=30"/>>   
 </launch>
