@@ -424,8 +424,8 @@ namespace aruco
       //ensure that _thresParam1%2==1
       if ( param1<3 ) param1=3;
       else if ( ( ( int ) param1 ) %2 !=1 ) param1= ( int ) ( param1+1 );
-
-      cv::adaptiveThreshold ( grey,out,255,ADAPTIVE_THRESH_MEAN_C,THRESH_BINARY_INV,param1,param2 );
+	  cv::threshold ( grey, out, param1, 255, CV_THRESH_BINARY_INV | CV_THRESH_OTSU );
+      //cv::adaptiveThreshold ( grey,out,255,ADAPTIVE_THRESH_MEAN_C,THRESH_BINARY_INV,param1,param2 );
       break;
     case CANNY:
     {
