@@ -5,7 +5,7 @@
     <arg name="eye"             default="right"/>
     <arg name="marker_frame"    default="aruco_marker_frame"/>
     <arg name="ref_frame"       default=""/>  <!-- leave empty and the pose will be published wrt param parent_name -->
-    <arg name="exposure" default="2"/>
+    <arg name="exposure" 		default="2"/>
 	
 	<node name="usb_cam" pkg="usb_cam" type="usb_cam_node" output="screen" >
 		<param name="camera_frame_id" value="usb_6mm_camera" />

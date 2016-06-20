@@ -318,13 +318,15 @@ namespace aruco {
 
     //Markers  are divided in 7x7 regions, of which the inner 5x5 belongs to marker info
     //the external border shoould be entirely black
-
-    int swidth=grey.rows/7;
-    for (int y=0;y<7;y++)
+	int whole_marker_size = 9;
+	
+    int swidth=grey.rows/whole_marker_size;
+    for (int y=0;y<whole_marker_size;y++)
     {
-      int inc=6;
-      if (y==0 || y==6) inc=1;//for first and last row, check the whole border
-      for (int x=0;x<7;x+=inc)
+      int inc=7;//whole_marker_size-2
+      if (y==0 || y==1 || y==7 || y==8) 
+		inc=1;//for first and last row, check the whole border
+      for (int x=0;x<whole_marker_size;x+=inc)
       {
         int Xstart=(x)*(swidth);
         int Ystart=(y)*(swidth);
@@ -347,8 +349,8 @@ namespace aruco {
 
       for (int x=0;x<5;x++)
       {
-        int Xstart=(x+1)*(swidth);
-        int Ystart=(y+1)*(swidth);
+        int Xstart=(x+2)*(swidth);
+        int Ystart=(y+2)*(swidth);
         Mat square=grey(Rect(Xstart,Ystart,swidth,swidth));
         int nZ=countNonZero(square);
         if (nZ> (swidth*swidth) /2)  _bits.at<uchar>( y,x)=1;
