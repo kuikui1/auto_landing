@@ -119,7 +119,9 @@ namespace aruco
   void MarkerDetector::detect ( const  cv::Mat &input,vector<Marker> &detectedMarkers,Mat camMatrix ,Mat distCoeff ,float markerSizeMeters ,bool setYPerpendicular) throw ( cv::Exception )
   {
 
-
+	int id_detected;
+	
+	
     //it must be a 3 channel image
     if ( input.type() ==CV_8UC3 )   cv::cvtColor ( input,grey,CV_BGR2GRAY );
     else     grey=input;
@@ -195,7 +197,7 @@ namespace aruco
       if (resW) {
         int nRotations;
         int id= ( *markerIdDetector_ptrfunc ) ( canonicalMarker,nRotations );
-        if ( id!=-1 )
+        if ( id!=-1 && id!=0)
         {
           if(_cornerMethod==LINES) refineCandidateLines( MarkerCanditates[i] ); // make LINES refinement before lose contour points
           detectedMarkers.push_back ( MarkerCanditates[i] );
@@ -242,12 +244,19 @@ namespace aruco
     }
     //remove the markers marker
     removeElements ( detectedMarkers, toRemove );
-
+	
+	float larger_marker_size = markerSizeMeters;
     ///detect the position of detected markers if desired
     if ( camMatrix.rows!=0  && markerSizeMeters>0 )
     {
       for ( unsigned int i=0;i<detectedMarkers.size();i++ )
+      {
+        id_detected = detectedMarkers[i].id;
+        if (id_detected == 26 || id_detected == 58)
+			markerSizeMeters = 0.028;
         detectedMarkers[i].calculateExtrinsics ( markerSizeMeters,camMatrix,distCoeff,setYPerpendicular );
+		markerSizeMeters = larger_marker_size;
+	  }
     }
   }
 

@@ -168,8 +168,8 @@ public:
         //for each marker, draw info and its boundaries in the image
         for(size_t i=0; i<markers.size(); ++i)
         {
-          // only publishing the selected marker
-          if(markers[i].id == marker_id)
+          // only publishing the selected marker 
+          if(markers[i].id == 26 || markers[i].id == 58 || markers[i].id == 35 || markers[i].id == 163 || markers[i].id == 640 || markers[i].id == 43 || markers[i].id == 291 || markers[i].id == 355)
           {
 		  // by Weiwei
 			//ROS_INFO("x: %0.3f y: %0.3f z: %0.3f", markers[i].Tvec.at<float>(0,0), markers[i].Tvec.at<float>(0,1), markers[i].Tvec.at<float>(0,2));		
@@ -203,6 +203,40 @@ public:
             tf::poseTFToMsg(transform, poseMsg.pose);
             poseMsg.header.frame_id = reference_frame;
             poseMsg.header.stamp = curr_stamp;
+            
+            double aruco_roll_, aruco_pitch_, aruco_yaw_;
+            tf::Quaternion aruco_quat_;
+            tf::quaternionMsgToTF(poseMsg.pose.orientation, aruco_quat_);
+            tf::Matrix3x3(aruco_quat_).getRPY(aruco_roll_, aruco_pitch_, aruco_yaw_);
+            
+            float PI = 3.1415926;
+            
+            aruco_yaw_ = aruco_yaw_*180/PI;
+            if(markers[i].id == 26 || markers[i].id == 58)
+            {
+				float ang = PI*3/4;
+				float x_0 = -0.015;
+				float y_0 = 0.045;
+				poseMsg.pose.position.x = x_0 + poseMsg.pose.position.x;
+				poseMsg.pose.position.y = y_0 + poseMsg.pose.position.y;
+				
+				aruco_yaw_ = aruco_yaw_ + ang*180/PI;
+			}
+			
+			double temp_x = poseMsg.pose.position.x;
+			double temp_y = poseMsg.pose.position.y;
+			
+			poseMsg.pose.position.x = -temp_y;
+			poseMsg.pose.position.y = -temp_x;
+			
+			tf::Quaternion quat = tf::createQuaternionFromRPY(aruco_roll_, aruco_pitch_, aruco_yaw_);
+			
+			poseMsg.pose.orientation.x = quat.x();
+			poseMsg.pose.orientation.y = quat.y();
+			poseMsg.pose.orientation.z = quat.z();
+			poseMsg.pose.orientation.w = quat.w();
+		
+            
             pose_pub.publish(poseMsg);
 
             geometry_msgs::TransformStamped transformMsg;

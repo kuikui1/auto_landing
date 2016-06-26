@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(px4_offboard_velocity_control)
+project(px4_velocity_control_node)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -10,7 +10,6 @@ find_package(catkin REQUIRED COMPONENTS
   mavros
   mavros_extras
   geometry_msgs
-  angles
 )
 
 
@@ -24,10 +23,10 @@ include_directories(
 )
 
 
-add_executable(px4_offboard_velocity_control src/px4_offboard_velocity_control_node.cpp)
+add_executable(px4_velocity_control_node src/px4_velocity_control_node.cpp)
 
 
-target_link_libraries(px4_offboard_velocity_control
+target_link_libraries(px4_velocity_control_node
    ${catkin_LIBRARIES}
  )
 

@@ -266,7 +266,7 @@ namespace aruco {
  *
  *
  ************************************/
-  int FiducidalMarkers::hammDistMarker(Mat  bits)
+  int FiducidalMarkers::hammDistMarker(Mat  bits, int &err_line)
   {
     int ids[4][5]=
     {
@@ -332,7 +332,7 @@ namespace aruco {
         int Ystart=(y)*(swidth);
         Mat square=grey(Rect(Xstart,Ystart,swidth,swidth));
         int nZ=countNonZero(square);
-        if (nZ> (swidth*swidth) /2) {
+        if (nZ> ((swidth*swidth) /2)*1.2) {
           // 		cout<<"neb"<<endl;
           return -1;//can not be a marker because the border element is not black!
         }
@@ -363,25 +363,30 @@ namespace aruco {
     Mat Rotations[4];
     Rotations[0]=_bits;
     int dists[4];
-    dists[0]=hammDistMarker( Rotations[0]) ;
+    int err_line;
+    
+    dists[0]=hammDistMarker( Rotations[0], err_line) ;
     pair<int,int> minDist( dists[0],0);
     for (int i=1;i<4;i++)
     {
       //rotate
       Rotations[i]=rotate(Rotations[i-1]);
       //get the hamming distance to the nearest possible word
-      dists[i]=hammDistMarker( Rotations[i]) ;
+      dists[i]=hammDistMarker( Rotations[i], err_line) ;
       if (dists[i]<minDist.first)
       {
         minDist.first=  dists[i];
         minDist.second=i;
       }
     }
+    dists[minDist.second]=hammDistMarker( Rotations[minDist.second], err_line) ;
     // 		        printMat<uchar>( Rotations [ minDist.second]);
     // 		 	cout<<"MinDist="<<minDist.first<<" "<<minDist.second<<endl;
 
     nRotations=minDist.second;
-    if (minDist.first!=0)	 //FUTURE WORK: correct if any error
+    //if ((err_line > 1)&&(minDist.first!=0))	 //FUTURE WORK: correct if any error
+    
+    if ((err_line > 1)&&(minDist.first>3))
       return -1;
     else {//Get id of the marker
       int MatID=0;

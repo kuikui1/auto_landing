@@ -109,7 +109,7 @@ private:
   
     static vector<int> getListOfValidMarkersIds_random(int nMarkers,vector<int> *excluded) throw (cv::Exception);
     static  cv::Mat rotate(const cv::Mat & in);
-    static  int hammDistMarker(cv::Mat  bits);
+    static  int hammDistMarker(cv::Mat  bits, int &err_line);
     static  int analyzeMarkerImage(cv::Mat &grey,int &nRotations);
 };
 
